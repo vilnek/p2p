@@ -1,0 +1,51 @@
+# Made by installs, builds and tests (never in the repository)
+node_modules/
+dist/
+test-results/
+playwright-report/
+blob-report/
+coverage/
+tests/lab/out/
+tests/lab/.dist*/
+native/www/
+native/release/
+native/ios/build/
+native/ios/build-device/
+native/macos/build/
+native/android/.gradle/
+native/android/build/
+native/android/app/build/
+site/out/
+site/.wrangler/
+build/
+DerivedData/
+xcuserdata/
+.gradle/
+*.xcarchive
+*.log
+*.tsbuildinfo
+
+# Release files and signing (never in the repository)
+release/
+*.apk
+*.aab
+*.ipa
+*.keystore
+*.jks
+*.p12
+*.p8
+*.pem
+*.mobileprovision
+*.provisionprofile
+keystore.properties
+local.properties
+
+# Secrets and local settings
+.env
+.env.*
+!.env.example
+
+# Editors and system files
+.DS_Store
+.vscode/
+.idea/

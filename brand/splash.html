@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>P2P Talk · start animation</title>
+<style>
+/* Self-contained: no outside fonts or files, so it can be pasted into the one-file app. */
+:root{--bg:#070B14;--cyan:#00F2FE;--violet:#8B5CF6;--t1:#F8FAFC;--t2:#94A3B8}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg)}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,"Noto Sans",sans-serif;color:var(--t1);overflow:hidden}
+
+#p2p-splash{position:fixed;inset:0;display:grid;place-items:center;background:var(--bg);z-index:9999;
+  animation:splash-out .45s ease 2.55s forwards}
+#p2p-splash .glow{position:absolute;inset:-20%;pointer-events:none;
+  background:radial-gradient(40% 35% at 30% 30%,rgba(0,242,254,.22),transparent 70%),radial-gradient(45% 40% at 72% 72%,rgba(139,92,246,.28),transparent 70%);
+  animation:glow-in 1.4s ease both, glow-drift 6s ease-in-out 1.4s infinite alternate}
+#p2p-splash .stack{position:relative;display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center}
+#p2p-splash svg{width:min(42vw,190px);height:auto;overflow:visible}
+
+/* bubbles draw themselves */
+.b1,.b2{fill:none;stroke-width:44;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1800;stroke-dashoffset:1800}
+.b1{stroke:var(--cyan);animation:draw .8s cubic-bezier(.6,.05,.3,1) .15s forwards}
+.b2{stroke:var(--violet);animation:draw .7s cubic-bezier(.6,.05,.3,1) .5s forwards}
+/* dots pop, then the link connects them */
+.d1,.d2{transform-box:fill-box;transform-origin:center;transform:scale(0)}
+.d1{fill:var(--cyan);animation:pop .35s cubic-bezier(.3,1.6,.5,1) 1.0s forwards}
+.d2{fill:var(--violet);animation:pop .35s cubic-bezier(.3,1.6,.5,1) 1.12s forwards}
+.link{stroke:url(#sp-line);stroke-width:22;stroke-linecap:round;stroke-dasharray:70;stroke-dashoffset:70;animation:draw .3s ease 1.35s forwards}
+/* a spark travels along the link: "sent, directly" */
+.spark{fill:#fff;opacity:0;filter:url(#sp-blur);animation:spark .55s ease-in-out 1.55s forwards}
+/* rings pulse out from the mark when it connects */
+.ring{fill:none;stroke:var(--cyan);stroke-width:6;opacity:0;transform-box:fill-box;transform-origin:center;animation:ring 1s ease-out 1.6s forwards}
+.ring.r2{stroke:var(--violet);animation-delay:1.78s}
+
+.word{font-size:clamp(30px,8vw,44px);font-weight:800;letter-spacing:-.5px;
+  background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;
+  opacity:0;transform:translateY(10px);animation:rise .55s ease 1.55s forwards}
+.tag{font-size:clamp(13px,3.6vw,16px);color:var(--t2);opacity:0;transform:translateY(8px);animation:rise .5s ease 1.8s forwards}
+.by{position:absolute;bottom:max(28px,env(safe-area-inset-bottom));left:0;right:0;text-align:center;font-size:12px;letter-spacing:2.5px;color:rgba(148,163,184,.75);
+  opacity:0;animation:fade .6s ease 1.95s forwards}
+.by b{font-weight:700;color:var(--t1)}
+
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes pop{to{transform:scale(1)}}
+@keyframes spark{0%{opacity:0;transform:translateX(0)}15%{opacity:1}85%{opacity:1}100%{opacity:0;transform:translateX(62px)}}
+@keyframes ring{0%{opacity:.7;transform:scale(.6)}100%{opacity:0;transform:scale(1.5)}}
+@keyframes rise{to{opacity:1;transform:none}}
+@keyframes fade{to{opacity:1}}
+@keyframes glow-in{from{opacity:0}to{opacity:1}}
+@keyframes glow-drift{to{transform:translate(2%,-2%) scale(1.05)}}
+@keyframes splash-out{to{opacity:0;visibility:hidden}}
+
+@media (prefers-reduced-motion:reduce){
+  #p2p-splash *{animation-duration:.01s!important;animation-delay:0s!important}
+  #p2p-splash{animation:splash-out .3s ease .6s forwards}
+}
+
+/* preview-only controls (not part of the app) */
+.preview{position:fixed;top:14px;right:14px;z-index:10000;display:flex;gap:8px}
+.preview button{font:600 13px inherit;color:var(--t1);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:8px 12px;cursor:pointer}
+.behind{position:fixed;inset:0;display:grid;place-items:center;color:var(--t2);font-size:14px}
+</style>
+</head>
+<body>
+<div class="behind">The app's first screen appears here after the animation</div>
+
+<div id="p2p-splash" role="img" aria-label="P2P Talk by Vilnek">
+  <div class="glow"></div>
+  <div class="stack">
+    <svg viewBox="140 260 700 600" aria-hidden="true">
+      <defs>
+        <linearGradient id="sp-line" gradientUnits="userSpaceOnUse" x1="364" y1="0" x2="426" y2="0"><stop offset="0" stop-color="#00F2FE"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient>
+        <filter id="sp-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
+      </defs>
+      <circle class="ring" cx="395" cy="445" r="150"/>
+      <circle class="ring r2" cx="395" cy="445" r="150"/>
+      <path class="b1" d="M250 300h300a90 90 0 0 1 90 90v110a90 90 0 0 1-90 90H420l-120 100V590h-50a90 90 0 0 1-90-90V390a90 90 0 0 1 90-90z"/>
+      <path class="b2" d="M700 440h20a90 90 0 0 1 90 90v110a90 90 0 0 1-90 90h-30v100L570 730h-60"/>
+      <path class="link" d="M364 445h62"/>
+      <circle class="d1" cx="330" cy="445" r="34"/>
+      <circle class="d2" cx="460" cy="445" r="34"/>
+      <circle class="spark" cx="364" cy="445" r="10"/>
+    </svg>
+    <div class="word">P2P Talk</div>
+    <div class="tag">Talk directly, device to device</div>
+  </div>
+  <div class="by">OPEN SOURCE · BY <b>VILNEK</b></div>
+</div>
+
+<div class="preview"><button onclick="replay()">▶ Replay</button></div>
+<script>
+// Preview only: replay the animation. In the app, the splash removes itself after ~3 s
+// (listen for 'animationend' of splash-out, then remove the node). Tap to skip.
+function replay(){const s=document.getElementById('p2p-splash');const c=s.cloneNode(true);s.replaceWith(c);}
+document.addEventListener('click',e=>{if(e.target.closest('#p2p-splash'))e.target.closest('#p2p-splash').style.animation='splash-out .25s ease forwards';});
+</script>
+</body>
+</html>

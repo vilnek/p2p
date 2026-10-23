@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ic_launcher_background">#070B14</color>
+    <!-- P2P Talk background navy: launch screen, window, status and navigation bars -->
+    <color name="p2p_background">#070B14</color>
+</resources>

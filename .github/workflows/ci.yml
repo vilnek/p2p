@@ -1,0 +1,67 @@
+# Checks every push and pull request: install, unit tests, build, URL allow-list, end-to-end tests.
+# The end-to-end tests use a tiny local relay only; they never contact the public relays.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Build (type-check + dist/p2p.html)
+        run: npm run build
+
+      - name: Check the built file contacts only allowed addresses
+        run: npm run check:urls
+
+      - name: Upload the built app
+        uses: actions/upload-artifact@v4
+        with:
+          name: p2p-talk-dist
+          path: dist/
+          if-no-files-found: error
+
+      # GitHub's runner has no Google Chrome channel set up for Playwright: use Playwright's Chromium.
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: End-to-end tests
+        run: npm run test:e2e
+        env:
+          PW_CHANNEL: chromium
+
+      - name: Upload test results (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-results
+          path: |
+            test-results/
+            playwright-report/
+          if-no-files-found: ignore
+          retention-days: 7

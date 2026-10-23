@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="false"
+        android:allowAudioPlaybackCapture="false"
+        android:fullBackupContent="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode|navigation"
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBarLaunch"
+            android:launchMode="singleTask"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <!-- Screen sharing in a call: the capture runs here, with the "P2P Talk is sharing your
+             screen" notification and its Stop button (ScreenCaptureService.java). -->
+        <service
+            android:name=".ScreenCaptureService"
+            android:exported="false"
+            android:foregroundServiceType="mediaProjection" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
+
+        <!-- Photos and videos are sent as the original: say this app reads HEVC and HDR video, so
+             Android never converts them when the app opens them (NativeFilesPlugin.java). -->
+        <property
+            android:name="android.media.PROPERTY_MEDIA_CAPABILITIES"
+            android:resource="@xml/media_capabilities" />
+
+        <!-- The Photo Picker on Android 6-10 too (through Google Play services), when available. -->
+        <service
+            android:name="com.google.android.gms.metadata.ModuleDependencies"
+            android:enabled="false"
+            android:exported="false"
+            tools:ignore="MissingClass">
+            <intent-filter>
+                <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
+            </intent-filter>
+            <meta-data android:name="photopicker_activity:0:required" android:value="" />
+        </service>
+    </application>
+
+    <!-- Permissions (asked when first needed, with plain reasons; plan §13.1) -->
+
+    <!-- Talking to the other phone directly, and to the public relays used to find each other -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Scanning a friend's code, and video calls -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- Voice and video calls -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <!-- New message and incoming call alerts (Android 13+), and the screen sharing notification -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Sharing my screen in a call (Android asks the user every time; a notification shows while sharing) -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
+    <!-- Save to Photos on Android 6-9 only (asked when first saving); Android 10+ needs no permission -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
+
+    <!-- The camera is optional, so phones without one can still install the app -->
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+
+    <!-- TODO(phase 3, background): "P2P Talk is on" notification so messages arrive while closed.
+         (FOREGROUND_SERVICE and FOREGROUND_SERVICE_MEDIA_PROJECTION are on above, for screen sharing.)
+         <uses-permission android:name="android.permission.FOREGROUND_SERVICE_PHONE_CALL" />
+         <uses-permission android:name="android.permission.FOREGROUND_SERVICE_REMOTE_MESSAGING" />
+         <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />  (incoming call screen)
+         Play needs a demo video for these service types (plan §13.1). -->
+    <!-- TODO(later, nearby without internet): Bluetooth and Wi-Fi Direct.
+         <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:usesPermissionFlags="neverForLocation" />
+         <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+         <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+         <uses-permission android:name="android.permission.NEARBY_WIFI_DEVICES" android:usesPermissionFlags="neverForLocation" />
+         Bluetooth headsets during calls also need BLUETOOTH_CONNECT on Android 12+. -->
+</manifest>

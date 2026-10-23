@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/p2p_background</item>
+        <item name="colorPrimaryDark">@color/p2p_background</item>
+        <item name="colorAccent">#00F2FE</item>
+    </style>
+
+    <!-- The app after launch: navy window and bars, light status and navigation bar icons. -->
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:background">@null</item>
+        <item name="android:windowBackground">@color/p2p_background</item>
+        <item name="android:statusBarColor">@color/p2p_background</item>
+        <item name="android:navigationBarColor">@color/p2p_background</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
+    </style>
+
+    <!-- Launch screen (Android 12+ system splash, and the same look on older Android through
+         androidx core-splashscreen): navy background with the P2P Talk mark in the middle.
+         MainActivity keeps it until the web page has loaded, then fades it out (~200 ms) into the
+         web start animation, which draws the same mark. -->
+    <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/p2p_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_mark</item>
+        <item name="postSplashScreenTheme">@style/AppTheme.NoActionBar</item>
+        <item name="android:statusBarColor">@color/p2p_background</item>
+        <item name="android:navigationBarColor">@color/p2p_background</item>
+    </style>
+</resources>

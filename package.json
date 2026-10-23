@@ -1,0 +1,37 @@
+{
+  "name": "p2p-talk",
+  "version": "26.10.1",
+  "private": true,
+  "description": "P2P Talk: open-source, serverless, peer-to-peer chats, calls, files and screen sharing, by Vilnek",
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --port 4317 --strictPort",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "check:urls": "node scripts/check-urls.mjs",
+    "probe:relays": "node scripts/probe-relays.mjs",
+    "test:real": "playwright test --config playwright.real.config.ts",
+    "lab": "playwright test --config playwright.lab.config.ts",
+    "lab:real": "playwright test --config playwright.lab.config.ts --project real"
+  },
+  "dependencies": {
+    "@noble/curves": "1.9.7",
+    "@noble/hashes": "1.8.0",
+    "@scure/bip39": "1.6.0",
+    "hash-wasm": "4.12.0",
+    "jsqr": "1.4.0",
+    "lucide": "1.50.0",
+    "uqr": "0.1.3"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "typescript": "5.9.3",
+    "vite": "6.4.5",
+    "vite-plugin-singlefile": "2.3.4",
+    "vitest": "3.2.7",
+    "ws": "8.22.0"
+  }
+}

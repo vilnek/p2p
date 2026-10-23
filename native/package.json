@@ -1,0 +1,28 @@
+{
+  "name": "p2p-talk-native",
+  "version": "0.0.1",
+  "private": true,
+  "description": "P2P Talk phone apps: the P2P Talk web app inside Capacitor for Android and iPhone",
+  "license": "Apache-2.0",
+  "scripts": {
+    "sync-web": "node scripts/sync-web.mjs",
+    "sync": "npm run sync-web && cap sync",
+    "ios:build-sim": "npm run sync && xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build CODE_SIGNING_ALLOWED=NO build",
+    "android:apk": "npm run sync && cd android && ./gradlew assembleDebug",
+    "icons": "sh scripts/make-icons.sh",
+    "mac:project": "ruby scripts/make-mac-project.rb",
+    "mac:build": "npm run sync-web && xcodebuild -project macos/P2PTalk.xcodeproj -scheme P2PTalk -configuration Release -derivedDataPath macos/build/dd -allowProvisioningUpdates build",
+    "mac:archive": "npm run sync-web && xcodebuild archive -project macos/P2PTalk.xcodeproj -scheme P2PTalk -configuration Release -destination generic/platform=macOS -archivePath release/mac/P2P-Talk-mac.xcarchive -derivedDataPath macos/build/dd -allowProvisioningUpdates"
+  },
+  "dependencies": {
+    "@capacitor/android": "7.6.9",
+    "@capacitor/core": "7.6.9",
+    "@capacitor/ios": "7.6.9"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "7.6.9"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

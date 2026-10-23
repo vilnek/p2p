@@ -1,0 +1,20 @@
+{
+  "appId": "com.vilnek.p2p",
+  "appName": "P2P Talk",
+  "webDir": "www",
+  "backgroundColor": "#070B14",
+  "loggingBehavior": "debug",
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#070B14",
+    "limitsNavigationsToAppBoundDomains": false,
+    "allowsLinkPreview": false
+  },
+  "android": {
+    "backgroundColor": "#070B14",
+    "adjustMarginsForEdgeToEdge": "auto",
+    "allowMixedContent": false,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false
+  }
+}

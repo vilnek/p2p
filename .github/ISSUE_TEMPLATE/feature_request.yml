@@ -1,0 +1,31 @@
+name: Feature idea
+description: Suggest something new or better.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for the idea. For a change to the protocol or the cryptography, please describe it here first, before a pull request.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What would it help you do?
+      description: The problem or the moment where you missed it.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your idea
+      description: How it could work, in plain words. Sketches welcome.
+    validations:
+      required: true
+  - type: textarea
+    id: privacy
+    attributes:
+      label: Privacy and no-server check
+      description: P2P Talk has no server that sees your chats. Would this need one, or show anything new to relays or other people?
+  - type: textarea
+    id: other
+    attributes:
+      label: Anything else

@@ -1,0 +1,62 @@
+name: Bug report
+description: Something doesn't work as it should.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping. **Security problem?** Don't report it here: see [SECURITY.md](../blob/main/SECURITY.md).
+        Please don't paste your 24 words, your P2P ID or anyone's personal details.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what you saw instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to repeat it
+      placeholder: |
+        1. Open the app on …
+        2. Tap …
+        3. See …
+    validations:
+      required: true
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where
+      multiple: true
+      options:
+        - Web app (p2p.vilnek.in)
+        - Android app
+        - iPhone / iPad (web app)
+        - Built from source
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device, system and browser
+      placeholder: e.g. Pixel 8, Android 15, Chrome 141
+  - type: input
+    id: version
+    attributes:
+      label: App version or commit
+  - type: dropdown
+    id: network
+    attributes:
+      label: Network (for connection or call problems)
+      options:
+        - Not about connecting
+        - Both on the same Wi-Fi
+        - Different Wi-Fi networks
+        - One or both on mobile data
+        - Don't know
+  - type: textarea
+    id: details
+    attributes:
+      label: Connection details or screenshots
+      description: Me › Network & relays › Connection details › Copy (addresses are already masked). Screenshots help too.

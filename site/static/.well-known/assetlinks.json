@@ -1,0 +1,5 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": { "namespace": "android_app", "package_name": "com.vilnek.p2p",
+              "sha256_cert_fingerprints": ["DF:17:79:E3:58:65:29:B7:79:0F:28:90:0A:4B:AF:EC:08:55:94:E6:56:F6:A4:25:3B:10:F3:1A:B9:22:A1:5C"] }
+}]

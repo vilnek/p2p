@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Only the folders the app really shares (security review L-7). NativeFilesPlugin.java:
+     cache/p2p-tmp  the camera writes a new photo or video here (EXTRA_OUTPUT)
+     files/p2p-received  received files, for "Share or open" -->
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <cache-path name="p2p_tmp" path="p2p-tmp/" />
+    <files-path name="p2p_received" path="p2p-received/" />
+</paths>

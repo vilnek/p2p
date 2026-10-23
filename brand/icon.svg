@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#101a33"/><stop offset="1" stop-color="#070b14"/></linearGradient>
+    <radialGradient id="glowC" cx="0.22" cy="0.18" r="0.7"><stop offset="0" stop-color="#00F2FE" stop-opacity=".35"/><stop offset="1" stop-color="#00F2FE" stop-opacity="0"/></radialGradient>
+    <radialGradient id="glowV" cx="0.85" cy="0.9" r="0.7"><stop offset="0" stop-color="#8B5CF6" stop-opacity=".45"/><stop offset="1" stop-color="#8B5CF6" stop-opacity="0"/></radialGradient>
+    <linearGradient id="line" gradientUnits="userSpaceOnUse" x1="364" y1="0" x2="426" y2="0"><stop offset="0" stop-color="#00F2FE"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <rect width="1024" height="1024" fill="url(#glowC)"/>
+  <rect width="1024" height="1024" fill="url(#glowV)"/>
+  <g id="mark" fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-width="44">
+    <path d="M250 300h300a90 90 0 0 1 90 90v110a90 90 0 0 1-90 90H420l-120 100V590h-50a90 90 0 0 1-90-90V390a90 90 0 0 1 90-90z" stroke="#00F2FE"/>
+    <path d="M700 440h20a90 90 0 0 1 90 90v110a90 90 0 0 1-90 90h-30v100L570 730h-60" stroke="#8B5CF6"/>
+    <circle cx="330" cy="445" r="34" fill="#00F2FE" stroke="none"/>
+    <circle cx="460" cy="445" r="34" fill="#8B5CF6" stroke="none"/>
+    <path d="M364 445h62" stroke="url(#line)" stroke-width="22"/>
+  </g>
+</svg>

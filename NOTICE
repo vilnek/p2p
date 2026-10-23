@@ -1,0 +1,15 @@
+P2P Talk
+Copyright 2026 Vilnek Private Limited
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This product includes software developed by other people, under their own licences.
+The built app (dist/p2p.html) contains these libraries:
+  - @noble/curves, @noble/hashes, @scure/bip39, @scure/base (MIT), Copyright (c) 2022 Paul Miller
+    and Patricio Palladino
+  - jsQR (Apache-2.0), by Cosmo Wolfe and Jefff Nelson
+  - uqr (MIT), Copyright (c) Project Nayuki and Copyright (c) 2023 Anthony Fu
+  - Lucide icons (ISC; some icons MIT, from Feather, Copyright (c) 2013-present Cole Bemis),
+    Copyright (c) Lucide Icons and Contributors
+
+Full licence texts: THIRD_PARTY_NOTICES.md
