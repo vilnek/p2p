@@ -1,11 +1,9 @@
-# Checks every push and pull request: install, unit tests, build, URL allow-list, end-to-end tests.
+# Manual only (Dr Vijay, 24 Oct 2026): runs when started by hand (Actions › CI › Run workflow), never on
+# push or pull request. Install, unit tests, build, URL allow-list, end-to-end tests.
 # The end-to-end tests use a tiny local relay only; they never contact the public relays.
 name: CI
 
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
 
 permissions:
