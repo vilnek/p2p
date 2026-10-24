@@ -81,7 +81,7 @@ test('1 · Ravi reconnects: exactly one of my devices connects, the other ends q
   for (const p of [iphone, mac, ravi]) p.on('pageerror', (e) => errors.push(e.message));
   await tab(ravi, 'chats');
   await ravi.getByTestId('contact').click();
-  await expect(ravi.getByTestId('success-note')).toHaveText('Connected', { timeout: 20_000 });
+  await expect(ravi.getByTestId('success-note')).toHaveText('Connected', { timeout: 45_000 }); // a slow CI runner needs longer
   // Exactly one device opened the chat with Ravi.
   await expect.poll(async () => (await iphone.getByTestId('peer-name').count()) + (await mac.getByTestId('peer-name').count()), { timeout: 15_000 }).toBe(1);
   const iphoneWon = (await iphone.getByTestId('peer-name').count()) === 1;

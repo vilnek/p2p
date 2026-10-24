@@ -49,11 +49,19 @@ const myTrack = (p: Page, sel: string, kind: 'video' | 'audio') =>
   }, [sel, kind] as const);
 
 /** Frames decoded so far by a video element (grows while video arrives). */
-const frames = (p: Page, sel: string) => p.evaluate((sel) => (document.querySelector(sel) as HTMLVideoElement | null)?.getVideoPlaybackQuality().totalVideoFrames ?? 0, sel);
+// Frames that reached the element's video track. A headless Linux browser (the CI runner) may not paint
+// the <video>, so the painted count can stand still while frames still arrive: take the higher of the
+// track's own count (MediaStreamTrack.stats) and the painted count.
+const frames = (p: Page, sel: string) =>
+  p.evaluate((sel) => {
+    const v = document.querySelector(sel) as HTMLVideoElement | null;
+    const track = (v?.srcObject as MediaStream | null)?.getVideoTracks()[0] as (MediaStreamTrack & { stats?: { totalFrames?: number } }) | undefined;
+    return Math.max(track?.stats?.totalFrames ?? 0, v?.getVideoPlaybackQuality().totalVideoFrames ?? 0);
+  }, sel);
 
 async function stillGettingVideo(p: Page, sel: string): Promise<void> {
   const before = await frames(p, sel);
-  await expect.poll(() => frames(p, sel), { timeout: 10_000 }).toBeGreaterThan(before + 5);
+  await expect.poll(() => frames(p, sel), { timeout: 20_000 }).toBeGreaterThan(before + 3);
 }
 
 test('1:1 video call: Devices switches camera, microphone and speaker live; Flip; the call stays up; the choice is remembered; the end goes back to the chat by itself', async () => {

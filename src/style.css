@@ -710,23 +710,42 @@ body.shelled::before, .first-run::before { content: ''; position: fixed; inset: 
 .hm-btn.primary { border: 0; color: #04121a; background: linear-gradient(135deg, var(--hm-cyan), var(--violet)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 8px 24px rgba(79, 209, 232, 0.25); }
 .hm-btn:hover { filter: brightness(1.08); }
 
-/* Top bar */
-.hm-top { position: sticky; top: max(12px, env(safe-area-inset-top)); z-index: 5; margin: 12px auto 0; max-width: 1160px; border-radius: 22px; display: flex; align-items: center; gap: 14px; padding: 10px 14px; }
-.hm-logo { width: 34px; height: 34px; border-radius: 10px; flex: none; }
-.hm-brand { font-weight: 800; letter-spacing: -0.3px; min-width: 0; line-height: 1.2; }
-.hm-brand small { color: var(--hm-muted); font-weight: 500; margin-left: 6px; font-size: 13px; }
-.hm-stickers { display: flex; gap: 8px; align-items: center; }
-.hm-top-btns { margin-left: auto; display: flex; gap: 10px; flex: none; }
-.hm-top .hm-btn { padding: 8px 14px; font-size: 14px; min-height: 40px; }
+/* Top bar (P4, 24 Oct 2026): logo and name, a short menu, the two buttons; on narrow screens a ☰ button
+   opens a small sheet. The same glass, quieter: more see-through, a thinner rim, a softer shadow. */
+.hm-top.hm-glass { position: sticky; top: max(10px, env(safe-area-inset-top)); z-index: 5; margin: 12px auto 0; max-width: 1160px; border-radius: 18px;
+  display: flex; align-items: center; gap: 10px; padding: 7px 7px 7px 12px; background: rgba(10, 16, 30, 0.6); border-color: rgba(255, 255, 255, 0.09);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 6px 20px rgba(0, 0, 0, 0.25); }
+.hm-logo { width: 32px; height: 32px; border-radius: 9px; flex: none; }
+.hm-brand { display: flex; align-items: baseline; gap: 6px; font-weight: 800; font-size: 16.5px; letter-spacing: -0.3px; min-width: 0; line-height: 1.2; white-space: nowrap; }
+.hm-brand small { color: var(--hm-muted); font-weight: 500; font-size: 12.5px; letter-spacing: 0; }
+.hm-nav { display: flex; align-items: center; gap: 2px; margin-left: auto; }
+.hm-nav-i { display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 0 12px; border-radius: 10px; border: 0; background: none;
+  color: #c6d2e6; font-family: inherit; font-size: 14.5px; font-weight: 600; line-height: 1; text-decoration: none; cursor: pointer; white-space: nowrap; }
+.hm-nav-i:hover { color: var(--hm-text); background: rgba(255, 255, 255, 0.07); }
+.hm-nav-gh { width: 16px; height: 16px; flex: none; }
+.hm-top-btns { display: flex; gap: 8px; flex: none; margin-left: 6px; padding-left: 12px; border-left: 1px solid rgba(255, 255, 255, 0.1); }
+.hm-top .hm-btn { padding: 8px 14px; font-size: 14px; min-height: 40px; border-radius: 12px; }
+.hm-top .hm-btn.ghost { background: transparent; }
+.hm-burger { display: none; align-items: center; justify-content: center; width: 42px; height: 42px; flex: none; padding: 0; border-radius: 12px;
+  border: 1px solid var(--hm-rim); background: rgba(255, 255, 255, 0.04); color: var(--hm-text); cursor: pointer; }
+.hm-burger svg { width: 22px; height: 22px; }
+/* The sheet is solid (no see-through): the hero's big words must not show behind the menu. */
+.hm-msheet.hm-glass { position: absolute; top: calc(100% + 8px); left: 0; right: 0; border-radius: 18px; padding: 8px; display: flex; flex-direction: column; gap: 6px;
+  background: #0b1120; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 18px 40px rgba(0, 0, 0, 0.55); }
+.hm-msheet[hidden] { display: none; }
+.hm-sheet-nav { display: flex; flex-direction: column; gap: 2px; }
+.hm-sheet-i { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 14px; border-radius: 12px; border: 0; background: none; color: var(--hm-text);
+  font-family: inherit; font-size: 16px; font-weight: 600; line-height: 1; text-align: left; text-decoration: none; cursor: pointer; }
+.hm-sheet-i:hover { background: rgba(255, 255, 255, 0.07); }
+.hm-sheet-i .hm-nav-gh { width: 18px; height: 18px; }
+.hm-sheet-restore { margin: 2px 6px 6px; }
 
-/* Stickers (small in the top bar, big in Download) */
+/* Stickers (the Download section) */
 .hm-stk { display: inline-flex; align-items: center; gap: 6px; height: 36px; padding: 0 10px 0 9px; border-radius: 999px; background: rgba(255, 255, 255, 0.07);
   border: 1px solid var(--hm-rim); color: var(--hm-text); text-decoration: none; cursor: pointer; font: inherit; }
 .hm-stk svg { width: 18px; height: 18px; flex: none; }
 .hm-stk .hm-dl { width: 12px; height: 12px; stroke: var(--hm-muted); fill: none; stroke-width: 2.2; border-left: 1px solid var(--hm-rim); padding-left: 6px; box-sizing: content-box; }
-.hm-stk.yt { background: rgba(139, 92, 246, 0.25); border-color: rgba(139, 92, 246, 0.6); }
 .hm-stk.off { cursor: default; }
-.hm-stk .hm-soon-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--hm-muted); opacity: 0.6; margin-left: 2px; }
 .hm-stk.big { height: 56px; padding: 0 18px 0 14px; gap: 12px; border-radius: 18px; }
 .hm-stk.big svg { width: 28px; height: 28px; }
 .hm-stk.big .hm-dl { width: 16px; height: 16px; }
@@ -736,7 +755,7 @@ body.shelled::before, .first-run::before { content: ''; position: fixed; inset: 
 .hm-lbl b { font-size: 16px; }
 .hm-stk.big.off { background: rgba(255, 255, 255, 0.035); }
 .hm-stk.big.off > svg { opacity: 0.7; }
-a.hm-stk:hover, button.hm-stk:hover { background: rgba(255, 255, 255, 0.12); }
+a.hm-stk:hover { background: rgba(255, 255, 255, 0.12); }
 .hm-stickgrid { display: flex; flex-wrap: wrap; gap: 12px; }
 
 /* Hero */
@@ -783,48 +802,97 @@ a.hm-stk:hover, button.hm-stk:hover { background: rgba(255, 255, 255, 0.12); }
 .hm-step p { color: var(--hm-muted); }
 .hm-n { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, var(--hm-cyan), var(--violet)); color: #04121a; font-weight: 800; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
 
-/* Footer chips (iDentist.Live style) */
-.hm-foot { padding: 30px 0 50px; display: flex; flex-direction: column; gap: 14px; color: var(--hm-muted); font-size: 13px; }
-.hm-foot a { color: var(--hm-muted); }
-.hm-chipfoot { display: flex; flex-wrap: wrap; gap: 8px; }
-.hm-fchip { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 6px 12px; border-radius: 12px; font: 700 13px/1.2 inherit; font-family: inherit; border: 1px solid; text-decoration: none; cursor: pointer; background: none; }
-.hm-fchip svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; flex: none; }
-.hm-fchip.off { cursor: default; opacity: 0.7; }
-.home .hm-fchip.c-green { color: #4ade80; background: rgba(74, 222, 128, 0.1); border-color: rgba(74, 222, 128, 0.35); }
-.home .hm-fchip.c-blue { color: #60a5fa; background: rgba(96, 165, 250, 0.1); border-color: rgba(96, 165, 250, 0.35); }
-.home .hm-fchip.c-orange { color: #fb923c; background: rgba(251, 146, 60, 0.1); border-color: rgba(251, 146, 60, 0.35); }
-.home .hm-fchip.c-violet { color: #a78bfa; background: rgba(167, 139, 250, 0.12); border-color: rgba(167, 139, 250, 0.4); }
-.home .hm-fchip.c-red { color: #f87171; background: rgba(248, 113, 113, 0.1); border-color: rgba(248, 113, 113, 0.35); }
-.home .hm-fchip.c-cyan { color: #4fd1e8; background: rgba(79, 209, 232, 0.1); border-color: rgba(79, 209, 232, 0.35); }
+/* Footer (P4, 24 Oct 2026, iDentist.Live style): link columns · Get P2P Talk store buttons · Follow Vilnek
+   round social buttons · GitHub · Made in India (drawn flag) for the world · the © line. */
+.hm-foot { margin-top: 28px; padding: 40px 0 calc(30px + env(safe-area-inset-bottom)); border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex; flex-direction: column; gap: 30px; color: var(--hm-muted); font-size: 14px; }
+.home .hm-foot h4 { margin: 0 0 12px; color: var(--hm-text); font-size: 12.5px; font-weight: 800; letter-spacing: 0.09em; text-transform: uppercase; }
+.hm-fcols { display: grid; grid-template-columns: 1.7fr 1fr 1fr 1fr; gap: 28px; }
+.hm-fbrand-name { display: flex; align-items: center; gap: 10px; color: var(--hm-text); font-weight: 800; font-size: 17px; letter-spacing: -0.3px; margin-bottom: 10px; }
+.hm-fbrand-name small { color: var(--hm-muted); font-weight: 500; font-size: 13px; letter-spacing: 0; margin-left: -4px; }
+.hm-fbrand p { max-width: 330px; margin-bottom: 10px !important; line-height: 1.55; }
+.home .hm-fmail { color: var(--hm-cyan); text-decoration: none; font-weight: 600; }
+.home .hm-fmail:hover { text-decoration: underline; }
+.hm-fcol li { margin-bottom: 6px; }
+.hm-flink { display: inline-flex; align-items: center; gap: 8px; min-height: 30px; padding: 0; border: 0; background: none; color: var(--hm-muted);
+  font-family: inherit; font-size: 14.5px; text-align: left; text-decoration: none; cursor: pointer; }
+.home a.hm-flink { color: var(--hm-muted); }
+.home a.hm-flink:hover, button.hm-flink:hover { color: var(--hm-text); text-decoration: underline; }
+.hm-flink.off { cursor: default; }
+.hm-soon-tag { font-style: normal; font-size: 11px; font-weight: 700; line-height: 1.5; color: #fde68a; background: rgba(253, 230, 138, 0.1); border: 1px solid rgba(253, 230, 138, 0.3); border-radius: 999px; padding: 0 8px; }
+.hm-frow { display: flex; flex-wrap: wrap; gap: 30px 56px; }
+.hm-badges, .hm-social { display: flex; flex-wrap: wrap; gap: 10px; }
+.hm-badge, .hm-gh { display: inline-flex; align-items: center; gap: 10px; min-height: 54px; padding: 7px 16px 7px 12px; border-radius: 12px; background: #04070d;
+  border: 1px solid rgba(255, 255, 255, 0.26); color: #fff; text-decoration: none; }
+.home a.hm-badge, .home a.hm-gh { color: #fff; }
+.hm-badge svg, .hm-gh > svg { width: 26px; height: 26px; flex: none; }
+.hm-badge-t { display: flex; flex-direction: column; line-height: 1.15; }
+.hm-badge-t small { font-size: 11px; font-weight: 600; letter-spacing: 0.2px; color: #b7c3d7; white-space: nowrap; }
+.hm-badge-t small em { font-style: normal; font-weight: 800; color: #fde68a; }
+.hm-badge-t b { font-size: 17px; font-weight: 700; letter-spacing: -0.2px; white-space: nowrap; }
+a.hm-badge:hover, a.hm-gh:hover { border-color: rgba(255, 255, 255, 0.55); background: #0b1220; }
+.hm-badge.off { cursor: default; border-color: rgba(255, 255, 255, 0.18); }
+.hm-gh-repo { margin-left: 4px; padding-left: 12px; border-left: 1px solid rgba(255, 255, 255, 0.18); color: #b7c3d7; font: 600 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+/* Follow buttons: each network's own logo in white on its brand colour (X: white on black, Instagram: its gradient). */
+.hm-soc { --bc: #ffffff; width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+  background: var(--bc); border: 1px solid rgba(255, 255, 255, 0.16); text-decoration: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 4px 14px -6px var(--bc); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.home a.hm-soc { color: #fff; }
+.home a.hm-soc[data-testid=foot-social-x] { background: #000; border-color: rgba(255, 255, 255, 0.35); }
+.home a.hm-soc[data-testid=foot-social-instagram] { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285aeb 90%); }
+.hm-soc svg { width: 20px; height: 20px; }
+.home a.hm-soc:hover, .home a.hm-soc:focus-visible { transform: translateY(-3px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 10px 24px -6px var(--bc); }
+.hm-fbottom { padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px; }
+.hm-made { display: inline-flex; align-items: center; gap: 9px; color: var(--hm-text); font-weight: 700; font-size: 15px; }
+.hm-flag { width: 27px; height: 18px; flex: none; border-radius: 2px; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18); }
+.hm-copy { font-size: 13px; font-weight: 600; letter-spacing: 0.5px; }
 
-@media (prefers-reduced-motion: reduce) { .hm-play-dot { transition: none; } }
-@media (max-width: 1100px) { .hm-stickers .hm-stk:not(.yt) .hm-dl { display: none; } }
-@media (max-width: 960px) { .hm-top .hm-stickers { display: none; } }
+@media (prefers-reduced-motion: reduce) { .hm-play-dot, .hm-soc { transition: none; } .home a.hm-soc:hover { transform: none; } }
+/* The menu folds into ☰ below 1060 px; "I have 24 words" moves into the sheet below 600 px. */
+@media (max-width: 1060px) {
+  .hm-nav { display: none; }
+  .hm-top-btns { margin-left: auto; padding-left: 0; border-left: 0; }
+  .hm-burger { display: inline-flex; }
+}
+@media (min-width: 1061px) { .hm-msheet.hm-glass { display: none; } }
+@media (min-width: 601px) { .hm-sheet-restore { display: none; } }
+@media (max-width: 600px) { .hm-top-btns [data-testid=restore] { display: none; } }
 @media (max-width: 860px) {
   .hm-hero { grid-template-columns: 1fr; padding-top: 36px; }
   .home h1 { font-size: 40px; }
   .hm-phone { width: 240px; }
   .hm-feat, .hm-how { grid-template-columns: 1fr; }
+  .hm-fcols { grid-template-columns: repeat(3, 1fr); }
+  .hm-fbrand { grid-column: 1 / -1; }
 }
 @media (max-width: 520px) {
   .hm-wrap { padding: 0 4px; }
-  .hm-top { gap: 8px; padding: 8px 10px; border-radius: 20px; }
+  .hm-top.hm-glass { gap: 8px; padding: 6px 6px 6px 10px; }
   .hm-logo { width: 30px; height: 30px; }
-  .hm-brand { font-size: 14px; }
-  .hm-brand small { display: block; margin-left: 0; font-size: 11px; }
-  .hm-top-btns { gap: 6px; }
-  .hm-top .hm-btn { padding: 6px 10px; font-size: 13px; min-height: 40px; border-radius: 12px; }
+  .hm-brand { flex-direction: column; align-items: flex-start; gap: 0; font-size: 15px; }
+  .hm-brand small { font-size: 11px; }
   .home h1 { font-size: 34px; letter-spacing: -1px; }
   .hm-lead { font-size: 17px; }
   .home h2 { font-size: 28px; }
   .hm-signup { padding: 18px; }
   .hm-play-dot { width: 64px; height: 64px; }
   .hm-play-dot::after { border-left-width: 20px; border-top-width: 12px; border-bottom-width: 12px; margin-left: 5px; }
+  .hm-fcols { grid-template-columns: 1fr 1fr; gap: 24px 16px; }
+  .hm-badges { display: grid; grid-template-columns: 1fr; }
+  .hm-gh { width: 100%; box-sizing: border-box; }
+  .hm-frow { gap: 28px; }
+  .hm-frow > .hm-fblock { width: 100%; }
+  .hm-social { gap: 8px; }
+  .hm-soc { width: 40px; height: 40px; }
+  .hm-soc svg { width: 18px; height: 18px; }
+  .hm-fbottom { flex-direction: column; align-items: flex-start; }
 }
 @media (max-width: 370px) {
-  .hm-brand { font-size: 13px; }
-  .hm-top .hm-btn { padding: 6px 8px; font-size: 12.5px; }
+  .hm-brand { font-size: 14px; }
+  .hm-top .hm-btn { padding: 6px 10px; font-size: 13px; }
   .home h1 { font-size: 31px; }
+  .hm-social { gap: 6px; }
+  .hm-soc { width: 38px; height: 38px; }
 }
 
 /* ---- list row options (hold / right-click / swipe), Devices sheet, call end note (23 Oct 2026) ---- */

@@ -1,20 +1,23 @@
-// Where to get P2P Talk: one entry per store, a link or null (design P3, the home page's download stickers).
-// A null store still shows its sticker, with "Coming soon", and is not clickable (aria-disabled).
+// Where to get P2P Talk: one entry per store, a link or null (design P3/P4: the home page's Download
+// stickers and the footer's "Get P2P Talk" buttons).
+// A null store still shows its sticker / button, with "Coming soon", and is not clickable (aria-disabled).
 //
-// To turn a store on, put its link here:
-//   play    → https://play.google.com/store/apps/details?id=com.vilnek.p2p  (when the Play listing is live)
-//   iphone, ipad, mac → the App Store link; windows → the Microsoft Store link.
+// To turn a store on, replace its null below with the link written next to it (all in review, 24 Oct 2026):
+//   play            → the Google Play listing (com.vilnek.p2p)
+//   iphone/ipad/mac → the App Store listing (app ID 6826231704; one app for all three)
+//   windows         → the Microsoft Store listing (Store ID 9NN48FKMNZLB)
+// These links are already on the allow-list in scripts/check-urls.mjs.
 // Web is this page's own address (p2p.vilnek.in on the site).
 
 export type StoreId = 'play' | 'iphone' | 'ipad' | 'mac' | 'windows' | 'web';
 
 /** Store links that are live today. null = "Coming soon". */
 export const STORE_LINKS: Record<Exclude<StoreId, 'web'>, string | null> = {
-  play: null,
-  iphone: null,
-  ipad: null,
-  mac: null,
-  windows: null,
+  play: null, // 'https://play.google.com/store/apps/details?id=com.vilnek.p2p'
+  iphone: null, // 'https://apps.apple.com/app/id6826231704'
+  ipad: null, // 'https://apps.apple.com/app/id6826231704'
+  mac: null, // 'https://apps.apple.com/app/id6826231704'
+  windows: null, // 'https://apps.microsoft.com/detail/9NN48FKMNZLB'
 };
 
 /** Download stickers, in the order the home page shows them. */

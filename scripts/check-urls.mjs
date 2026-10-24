@@ -6,9 +6,10 @@
 //   - the invite-link base (text only, never fetched: the code after "#" never reaches a server);
 //   - the SVG namespace name (a fixed label for drawing the line icons, never fetched);
 //   - the Terms and Privacy policy pages (links the person opens; never fetched by the app);
-//   - the home page (design P3): YouTube's privacy-enhanced player (frame-src, and the video address,
-//     loaded only when Play is pressed) and the footer links the person opens (Open source, About,
-//     Contact, YouTube channel; never fetched by the app);
+//   - the home page (design P3, header and footer P4): YouTube's privacy-enhanced player (frame-src, and
+//     the video address, loaded only when Play is pressed) and the links the person opens (GitHub, About,
+//     Contact, vilnek.in, the 7 official Vilnek social pages, and the store listings once they are
+//     switched on in src/core/stores.ts; never fetched by the app);
 //   - hash-wasm's licence comment (/*! hash-wasm (https://www.npmjs.com/package/hash-wasm) … */, text only).
 import { readFileSync, statSync } from 'node:fs';
 
@@ -34,7 +35,19 @@ const ALLOWED = new Set([
   'https://github.com/vilnek/p2p',
   'https://vilnek.in/about',
   'https://vilnek.in/contact',
+  'https://vilnek.in/',
+  // Follow Vilnek (brands/vilnek/social-kit.md)
+  'https://facebook.com/vilnek',
+  'https://x.com/Vilnek',
+  'https://www.instagram.com/vilnek',
   'https://www.youtube.com/@vilneks',
+  'https://www.linkedin.com/company/vilnek',
+  'https://t.me/vilnek',
+  'https://wa.me/message/EZMPWIIQMIARE1',
+  // Store listings (in review; written in src/core/stores.ts, ready to switch on)
+  'https://play.google.com/store/apps/details?id=com.vilnek.p2p',
+  'https://apps.apple.com/app/id6826231704',
+  'https://apps.microsoft.com/detail/9NN48FKMNZLB',
 ]);
 
 const file = new URL('../dist/p2p.html', import.meta.url);
@@ -56,4 +69,4 @@ if (bad.length || external.length) {
   console.error('FAIL: not on the allow-list:', [...bad, ...external].join(', '));
   process.exit(1);
 }
-console.log('OK: only STUN, the built-in relays, local test relays, the invite-link base, the SVG namespace name, the Terms / Privacy links, the home page video player and footer links.');
+console.log('OK: only STUN, the built-in relays, local test relays, the invite-link base, the SVG namespace name, the Terms / Privacy links, the home page video player and its header / footer links.');

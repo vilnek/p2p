@@ -324,6 +324,16 @@ test('host mode: the same 24 words as the normal app here → the same chats; he
   await n.getByTestId('message-input').fill('From the normal app');
   await n.getByTestId('send').click();
   await expect(b.getByTestId('msg-them').last()).toContainText('From the normal app', { timeout: 20_000 });
+  // Close the normal app only once the sent message is in its database (a slow CI runner can lag).
+  await expect.poll(() => n.evaluate(() => new Promise<boolean>((resolve) => {
+    const r = indexedDB.open('p2ptalk');
+    r.onsuccess = () => {
+      const all = r.result.transaction('messages').objectStore('messages').getAll();
+      all.onsuccess = () => (r.result.close(), resolve(all.result.some((m: { text?: string }) => m.text === 'From the normal app')));
+      all.onerror = () => (r.result.close(), resolve(false));
+    };
+    r.onerror = () => resolve(false);
+  })), { timeout: 15_000 }).toBe(true);
   await n.close();
 
   // Headless embed mode had kept a chat for the same words (its own database).
