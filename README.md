@@ -1,5 +1,7 @@
 # P2P Talk
 
+**Project Director and Writer:** [Dr Vijaykumar](https://vijaykumar.vilnek.in)
+
 **Chats, voice and video calls, files and screen sharing, straight from your device to theirs.**
 No phone number, no email, no account server, and nobody in the middle who can read anything.
 Open source (Apache-2.0), made by [Vilnek](https://vilnek.in).
@@ -184,4 +186,4 @@ Build the web app first (above), then follow [native/README.md](native/README.md
 
 ---
 
-Made by **[Vilnek](https://vilnek.in)** · <https://p2p.vilnek.in>
+Made by **[Vilnek](https://vilnek.in)** · Project Director and Writer: **[Dr Vijaykumar](https://vijaykumar.vilnek.in)** · <https://p2p.vilnek.in>

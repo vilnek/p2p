@@ -30,13 +30,10 @@ export async function revealWords(page: Page): Promise<string> {
   return words;
 }
 
-/** "I've written them down", then the 3-word check. Returns the 24 words. */
+/** "I've written them down" (no check step since 24 Oct 2026). Returns the 24 words. */
 export async function doneWords(page: Page): Promise<string> {
   const words = await revealWords(page);
   await page.getByTestId('phrase-done').click();
-  const list = words.split(' ');
-  for (const box of await page.getByTestId('check-word').all()) await box.fill(list[Number(await box.getAttribute('data-n')) - 1]);
-  await page.getByTestId('words-check-go').click();
   return words;
 }
 

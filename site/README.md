@@ -1,5 +1,7 @@
 # p2p.vilnek.in: hosting files for P2P Talk
 
+**Project Director and Writer:** [Dr Vijaykumar](https://vijaykumar.vilnek.in)
+
 Static hosting only: no server code, no database, no logs of ours. Cloudflare Pages (free), project `p2p-talk`, custom domain `p2p.vilnek.in`.
 
 | File | What |

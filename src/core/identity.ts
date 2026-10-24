@@ -23,8 +23,20 @@ export function newPhrase(): string {
 }
 
 /** Tidy what a person typed: lower case, single spaces. */
+/**
+ * Lower case, single spaces. Also reads the words as Copy gives them: a "P2P Talk: …" heading line and
+ * numbers ("1. apple", "2) river", one per line) are dropped. The 24 words themselves are letters only.
+ */
 export function normalisePhrase(phrase: string): string {
-  return phrase.toLowerCase().trim().split(/\s+/).join(' ');
+  return phrase
+    .toLowerCase()
+    .split(/\r?\n/)
+    .filter((line) => !/^\s*p2p talk\b/.test(line))
+    .join(' ')
+    .split(/\s+/)
+    .map((w) => w.replace(/^#?\d+[.):-]*/, '').replace(/[.,;:]+$/, ''))
+    .filter(Boolean)
+    .join(' ');
 }
 
 export function phraseIsValid(phrase: string): boolean {

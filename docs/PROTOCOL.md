@@ -1,5 +1,7 @@
 # P2P Talk protocol v0 (draft)
 
+**Project Director and Writer:** [Dr Vijaykumar](https://vijaykumar.vilnek.in)
+
 **Status:** draft, 23 Oct 2026. Describes the code in `src/core/` and `src/net/`.
 **Goal:** enough detail for someone else to build an app that talks to P2P Talk.
 

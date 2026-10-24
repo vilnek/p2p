@@ -1,5 +1,7 @@
 # Integration note: files with no size limit, and groups
 
+**Project Director and Writer:** [Dr Vijaykumar](https://vijaykumar.vilnek.in)
+
 **Status:** engine modules built and unit-tested, 23 Oct 2026. They are **not wired** into the UI,
 `peer.ts` or `hub.ts` yet. This note says how to wire them.
 Design: the file bubble with

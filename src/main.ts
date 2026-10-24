@@ -88,7 +88,7 @@ import { PhotoLink, PIC_FEATURE, PIC_KINDS, type PhotoHost } from './net/photos'
 import { groupStatus, parseReceipt, ReceiptOutbox, RCPT_FEATURE, shownStatus, upgrade, type TickStatus } from './net/receipts';
 import type { StoredPhoto } from './core/photo';
 import { cropPhoto, photoUrl } from './ui/photo';
-import { wordsCheck, wordsPanel } from './ui/words';
+import { wordsPanel } from './ui/words';
 import { homePage } from './ui/home';
 import { allowedRelays, myRelays, testInviteTtl, testRelays } from './net/config';
 import { Hub, joinInvite, type ContactRequest } from './net/hub';
@@ -416,7 +416,7 @@ async function makeAccount(name: string, deviceName: string): Promise<void> {
         h('p', { class: 'muted small' }, 'Type the same 24 words on your other phone or computer to use this account there too.'),
         wordsPanel(phrase),
         myIdBlock(),
-        h('button', { class: 'btn pri', 'data-testid': 'phrase-done', type: 'button', onclick: () => firstRun(brand(), wordsCheck(phrase, () => void checked(), showWords)) }, 'I’ve written them down')),
+        h('button', { class: 'btn pri', 'data-testid': 'phrase-done', type: 'button', onclick: () => void checked() }, 'I’ve written them down')),
     );
   showWords();
 }
@@ -1649,7 +1649,7 @@ async function privacyScreen(): Promise<void> {
           return sel;
         })())),
     h('div', { class: 'card' },
-      h('label', { class: 'kv tap' }, icon('ticks'), h('div', { class: 'k' }, 'Read receipts', h('div', { class: 'muted small' }, 'Off: you don’t send blue ticks, and you don’t see others’ either. Delivered ticks always go.')),
+      h('label', { class: 'kv tap' }, icon('ticks'), h('div', { class: 'k' }, 'Read receipts', h('div', { class: 'muted small' }, 'When off, you don’t send blue ticks and don’t see others’ either. Delivered ticks always go.')),
         (() => {
           const box = h('input', { type: 'checkbox', checked: readReceipts, 'data-testid': 'read-receipts', onchange: async () => {
             readReceipts = box.checked;
@@ -1895,12 +1895,11 @@ async function wordsScreen(): Promise<void> {
         h('p', { class: 'warn' }, 'Write these 24 words on paper, in order. Anyone with them can be you. We can’t recover them for you.'),
         h('p', { class: 'muted small' }, 'Type the same 24 words on your other phone or computer to use this account there too.'),
         wordsPanel(words),
-        h('button', { class: 'btn pri', 'data-testid': 'phrase-done', type: 'button', onclick: () =>
-          flow('words', 'Check your paper', wordsCheck(words, async () => {
-            await clearUnsavedWords();
-            unsavedWords = false;
-            clearMain();
-          }, () => void wordsScreen())) }, 'I’ve written them down')));
+        h('button', { class: 'btn pri', 'data-testid': 'phrase-done', type: 'button', onclick: async () => {
+          await clearUnsavedWords();
+          unsavedWords = false;
+          clearMain();
+        } }, 'I’ve written them down')));
     return;
   }
   flow('words', 'My 24 words',

@@ -1,5 +1,7 @@
 # P2P Talk threat model (draft)
 
+**Project Director and Writer:** [Dr Vijaykumar](https://vijaykumar.vilnek.in)
+
 **Status:** draft, updated 23 Oct 2026 (device certificates, find by ID, links that ask first, files,
 groups, embedded mode). Covers the Phase 0 code (one HTML file) and marks what is **planned**.
 An independent review was done on 23 Oct 2026; report security issues as described in SECURITY.md.

@@ -39,7 +39,8 @@ async function setUp(browser: Browser): Promise<void> {
   await mac.getByTestId('name').fill('Dr Vijay');
   await mac.getByTestId('restore').click();
   await mac.getByTestId('device-name').fill('Mac'); // on the restore screen
-  await mac.getByTestId('restore-words').fill(words);
+  // Pasted the way Copy gives them: a heading, then "1. word" per line (numbers are ignored).
+  await mac.getByTestId('restore-words').fill(['P2P Talk: my 24 words', ...words.split(' ').map((w, i) => `${i + 1}. ${w}`)].join('\n'));
   await mac.getByTestId('restore-go').click();
   for (const [label, p] of [['iPhone', iphone], ['Mac', mac]] as const) {
     p.on('console', (m) => debug[label].push(m.text()));

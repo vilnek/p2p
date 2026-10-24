@@ -1,5 +1,7 @@
 # Embedding P2P Talk in another app
 
+**Project Director and Writer:** [Dr Vijaykumar](https://vijaykumar.vilnek.in)
+
 **Status:** matches `src/embed.ts` as of 23 Oct 2026. Protocol version `1`.
 
 P2P Talk can run with **no screens of its own** inside another app. The host app opens the page in a

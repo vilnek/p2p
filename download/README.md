@@ -1,5 +1,7 @@
 # Download P2P Talk
 
+**Project Director and Writer:** [Dr Vijaykumar](https://vijaykumar.vilnek.in)
+
 | Device | How to get it |
 |---|---|
 | **Any phone or computer** | Open **<https://p2p.vilnek.in>**. On a phone: Share → **Add to Home Screen** (iPhone) or ⋮ → **Install app** (Android) |

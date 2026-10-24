@@ -1,5 +1,7 @@
 # Security policy
 
+**Project Director and Writer:** [Dr Vijaykumar](https://vijaykumar.vilnek.in)
+
 P2P Talk is a peer-to-peer messenger. People trust it with private chats and calls, so we take
 security reports seriously. Thank you for helping.
 

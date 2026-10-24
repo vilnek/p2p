@@ -26,9 +26,6 @@ test('make account, reload before the check: the same 24 words come back from th
   const again = await revealWords(p);
   expect(again).toBe(words);
   await p.getByTestId('phrase-done').click();
-  const list = words.split(' ');
-  for (const box of await p.getByTestId('check-word').all()) await box.fill(list[Number(await box.getAttribute('data-n')) - 1]);
-  await p.getByTestId('words-check-go').click();
   await expect(p.getByTestId('save-words-banner')).toHaveCount(0);
   await p.reload();
   await expect(p.getByTestId('tab-chats')).toBeVisible();

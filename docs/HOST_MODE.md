@@ -1,5 +1,7 @@
 # Host mode: P2P Talk's own screens inside another app
 
+**Project Director and Writer:** [Dr Vijaykumar](https://vijaykumar.vilnek.in)
+
 **Status:** built 23 Oct 2026 (`src/hostui.ts`, the "host mode" section of `src/main.ts`). Not deployed yet.
 Design **CN2** (Dr Vijay, 23 Oct 2026): Vilnek OS on the Mac shows P2P Talk's own full screens in its Connect page,
 under a thin Vilnek bar.

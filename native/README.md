@@ -1,5 +1,7 @@
 # P2P Talk: phone apps (Android and iPhone)
 
+**Project Director and Writer:** [Dr Vijaykumar](https://vijaykumar.vilnek.in)
+
 The P2P Talk web app (the repository root, `..`) wrapped as native Android and iPhone apps with
 [Capacitor](https://capacitorjs.com) (MIT), plus small native parts for privacy.
 

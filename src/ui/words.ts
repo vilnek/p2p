@@ -2,8 +2,9 @@
 //   - They sit under a frosted cover: "Tap and hold to show your 24 words". Only while held are they
 //     put on the page at all (a numbered 2-column grid); letting go removes them again.
 //   - Hidden again after 30 s, and whenever the app goes to the background.
-//   - Copy: copies them, then empties the clipboard after 60 s where the platform allows (best effort).
-//   - "I've written them down" asks for 3 random words back before going on.
+//   - Copy: copies them numbered, one per line ("1. apple"), then empties the clipboard after 60 s where
+//     the platform allows (best effort). Restore reads that text back (identity.ts normalisePhrase).
+//   - "I've written them down" goes straight on (Dr Vijay, 24 Oct 2026: no 3-word check, it was too hard).
 // They never go into a toast, title, notification, log, embed event or URL.
 // In the phone apps a device-lock check (Face ID / fingerprint / PIN) would come first; there is no
 // native biometric plugin yet, so the hold is the check for now.
@@ -54,7 +55,7 @@ export function wordsPanel(phrase: string): HTMLElement {
     h('div', { class: 'words-box' }, grid, cover),
     h('div', { class: 'row tight words-actions' },
       iconBtn('copy', 'Copy', { class: 'btn sec2 small with-icon', 'data-testid': 'words-copy', onclick: async () => {
-        const ok = await navigator.clipboard?.writeText(words.join(' ')).then(() => true, () => false);
+        const ok = await navigator.clipboard?.writeText(numberedWords(words)).then(() => true, () => false);
         copied.textContent = ok ? 'Copied. The clipboard is cleared in 1 minute.' : 'Couldn’t copy. Write them down instead.';
         if (ok) setTimeout(() => void navigator.clipboard?.writeText('').catch(() => undefined), CLIPBOARD_MS);
       } }, 'Copy'),
@@ -63,38 +64,6 @@ export function wordsPanel(phrase: string): HTMLElement {
   return panel;
 }
 
-/** Three different positions (1–24), in order. */
-export function pickThree(n = 24, rnd: () => number = Math.random): number[] {
-  const out = new Set<number>();
-  while (out.size < 3) out.add(1 + Math.floor(rnd() * n));
-  return [...out].sort((a, b) => a - b);
-}
-
-/** Do the typed words match? (case and spaces don't matter) */
-export const wordsMatch = (phrase: string, answers: [number, string][]): boolean => {
-  const words = phrase.trim().toLowerCase().split(/\s+/);
-  return answers.every(([n, w]) => words[n - 1] === w.trim().toLowerCase());
-};
-
-/** "Check your paper": three words back, then `ok`. `back` shows the words again. */
-export function wordsCheck(phrase: string, ok: () => void, back: () => void): HTMLElement {
-  const ns = pickThree(phrase.trim().split(/\s+/).length);
-  const err = h('p', { class: 'error', role: 'alert', 'data-testid': 'words-check-error' });
-  const inputs = ns.map((n) => h('input', { class: 'field', 'data-testid': 'check-word', 'data-n': String(n), placeholder: `Word #${n}`, 'aria-label': `Word number ${n}`,
-    autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false' }) as HTMLInputElement);
-  const go = () => {
-    if (!wordsMatch(phrase, inputs.map((el, i) => [ns[i], el.value]))) {
-      err.textContent = 'That doesn’t match your paper. Check the numbers and try again.';
-      return;
-    }
-    ok();
-  };
-  inputs.at(-1)!.addEventListener('keydown', (e) => e.key === 'Enter' && go());
-  return h('section', { class: 'card pad', 'data-testid': 'words-check' },
-    h('h2', {}, 'Check your paper'),
-    h('p', { class: 'muted' }, `Type words #${ns[0]}, #${ns[1]} and #${ns[2]} from your paper.`),
-    ...inputs.map((el, i) => h('label', { class: 'check-row' }, h('span', { class: 'num' }, `#${ns[i]}`), el)),
-    err,
-    h('button', { class: 'btn pri', 'data-testid': 'words-check-go', type: 'button', onclick: go }, 'Continue'),
-    h('button', { class: 'btn ghost', 'data-testid': 'words-check-back', type: 'button', onclick: back }, 'Show the words again'));
-}
+/** The words as Copy gives them: a heading, then one numbered word per line. */
+export const numberedWords = (words: string[]): string =>
+  ['P2P Talk: my 24 words', ...words.map((w, i) => `${i + 1}. ${w}`)].join('\n');

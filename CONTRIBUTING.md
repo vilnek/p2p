@@ -1,5 +1,7 @@
 # Contributing to P2P Talk
 
+**Project Director and Writer:** [Dr Vijaykumar](https://vijaykumar.vilnek.in)
+
 Thank you for helping. P2P Talk is an open-source, serverless, peer-to-peer messenger by Vilnek.
 Please read the [Code of Conduct](CODE_OF_CONDUCT.md) first.
 
