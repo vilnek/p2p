@@ -25,15 +25,30 @@ test.afterEach(async () => people.close());
 const PHONE = { viewport: { width: 390, height: 844 }, hasTouch: true };
 const CONNECTED = /^\d\d:\d\d$/;
 
+/** Keeps the page's peer connections, so the test can read decoded video frames from their stats. */
+const TRACK_PCS = () => {
+  const w = window as unknown as { __pcs: RTCPeerConnection[] };
+  w.__pcs = [];
+  const O = window.RTCPeerConnection;
+  window.RTCPeerConnection = function (...args: ConstructorParameters<typeof RTCPeerConnection>) {
+    const pc = new O(...args);
+    w.__pcs.push(pc);
+    return pc;
+  } as unknown as typeof RTCPeerConnection;
+  window.RTCPeerConnection.prototype = O.prototype;
+};
+
 async function pair(): Promise<{ a: Page; b: Page }> {
   const ctx = await people.context(PHONE);
   const a = await people.page(ctx, 'Dr Vijay');
+  await a.addInitScript(TRACK_PCS);
   await a.goto(people.q());
   await a.getByTestId('name').fill('Dr Vijay');
   await a.getByTestId('make-account').click();
   await doneWords(a);
   const link = await makeInvite(a);
   const b = await people.page(undefined, 'Ravi');
+  await b.addInitScript(TRACK_PCS);
   await b.goto(`${people.q()}${fragment(link)}`);
   await join(b, 'Ravi Kumar');
   await expect(a.getByTestId('peer-name')).toHaveText('Ravi Kumar', { timeout: 20_000 });
@@ -49,14 +64,20 @@ const myTrack = (p: Page, sel: string, kind: 'video' | 'audio') =>
   }, [sel, kind] as const);
 
 /** Frames decoded so far by a video element (grows while video arrives). */
-// Frames that reached the element's video track. A headless Linux browser (the CI runner) may not paint
-// the <video>, so the painted count can stand still while frames still arrive: take the higher of the
-// track's own count (MediaStreamTrack.stats) and the painted count.
+// Video frames arriving. A headless Linux browser (the CI runner) may not paint the <video>, so the
+// painted count can stand still while frames still arrive: take the higher of the painted count and the
+// frames decoded by the page's open peer connections (their stats).
 const frames = (p: Page, sel: string) =>
-  p.evaluate((sel) => {
+  p.evaluate(async (sel) => {
     const v = document.querySelector(sel) as HTMLVideoElement | null;
-    const track = (v?.srcObject as MediaStream | null)?.getVideoTracks()[0] as (MediaStreamTrack & { stats?: { totalFrames?: number } }) | undefined;
-    return Math.max(track?.stats?.totalFrames ?? 0, v?.getVideoPlaybackQuality().totalVideoFrames ?? 0);
+    let decoded = 0;
+    for (const pc of (window as unknown as { __pcs?: RTCPeerConnection[] }).__pcs ?? []) {
+      if (pc.connectionState === 'closed') continue;
+      (await pc.getStats()).forEach((r) => {
+        if (r.type === 'inbound-rtp' && r.kind === 'video') decoded += r.framesDecoded ?? 0;
+      });
+    }
+    return Math.max(decoded, v?.getVideoPlaybackQuality().totalVideoFrames ?? 0);
   }, sel);
 
 async function stillGettingVideo(p: Page, sel: string): Promise<void> {
