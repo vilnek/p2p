@@ -14,7 +14,10 @@ export default defineConfig({
     permissions: ['camera', 'microphone', 'clipboard-read', 'clipboard-write'],
     launchOptions: {
       // Fake camera / microphone, and screen sharing picks the whole screen without a dialog.
-      args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream', '--auto-select-desktop-capture-source=Entire screen', '--enable-usermedia-screen-capturing', '--autoplay-policy=no-user-gesture-required'],
+      // On the CI runner (Linux, no ".local" name lookup) Chrome's hidden local addresses can't be reached,
+      // so two test browsers on one machine sometimes can't connect directly: show the real local address there.
+      args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream', '--auto-select-desktop-capture-source=Entire screen', '--enable-usermedia-screen-capturing', '--autoplay-policy=no-user-gesture-required',
+        ...(process.env.CI ? ['--disable-features=WebRtcHideLocalIpsWithMdns'] : [])],
     },
   },
   webServer: {
